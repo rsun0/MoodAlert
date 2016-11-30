@@ -41,15 +41,8 @@ public class RegisterActivity extends AppCompatActivity {
     public void register(View v) {
         EditText emailInput = (EditText) findViewById(R.id.editText_email);
         EditText passwordInput = (EditText) findViewById(R.id.editText_password);
-        EditText confirmInput = (EditText) findViewById(R.id.editText_passwordConfirm);
         String email = emailInput.getText().toString();
         String password = emailInput.getText().toString();
-        String confirm = emailInput.getText().toString();
-
-        if (!password.equals(confirm)) {
-            Toast.makeText(this, R.string.mismatch_toast, Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -59,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, R.string.auth_failed_toast,
                                     Toast.LENGTH_SHORT).show();
                         }
+                        //TODO add user to database
                     }
                 });
     }
