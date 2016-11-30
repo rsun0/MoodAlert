@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Mood Alert</string>
+    <string name="sign_in_title">Sign In</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="sign_in_button">Sign In</string>
+    <string name="register_button">Register</string>
+    <string name="register_title">Register</string>
+    <string name="name_hint">Name</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="send_alert_button">Send Alert</string>
+    <string name="friends_button">Friends</string>
+    <string name="send_alert_title">Send Alert</string>
+    <string name="mood_hint">Mood</string>
+    <string name="send_button">Send</string>
+    <string name="add_friend_button">Add Friend</string>
+    <string name="friends_title">Friends</string>
+    <string name="auth_failed_toast">Invalid email/password</string>
+    <string name="mismatch_toast">Password confirmation does not match</string>
+</resources>
