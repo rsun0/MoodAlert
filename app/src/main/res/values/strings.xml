@@ -16,4 +16,6 @@
     <string name="friends_title">Friends</string>
     <string name="auth_failed_toast">Invalid email/password</string>
     <string name="mismatch_toast">Password confirmation does not match</string>
+    <string name="menu_sign_out">Sign Out</string>
+    <string name="confirm_password_hint">Confirm password</string>
 </resources>

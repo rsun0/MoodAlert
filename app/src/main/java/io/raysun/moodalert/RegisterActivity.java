@@ -38,11 +38,32 @@ public class RegisterActivity extends AppCompatActivity {
         };
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
     public void register(View v) {
         EditText emailInput = (EditText) findViewById(R.id.editText_email);
         EditText passwordInput = (EditText) findViewById(R.id.editText_password);
+        EditText confirmInput = (EditText) findViewById(R.id.editText_passwordConfirm);
         String email = emailInput.getText().toString();
         String password = emailInput.getText().toString();
+        String confirm = emailInput.getText().toString();
+
+        if (!password.equals(confirm)) {
+            Toast.makeText(this, R.string.mismatch_toast, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
