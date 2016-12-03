@@ -14,13 +14,30 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Startup screen for signing in.
+ * @author Ray Sun
+ */
 public class SignInActivity extends AppCompatActivity {
 
+    /**
+     * The name of the extra for the user ID.
+     */
     public static final String UID_EXTRA = "uid";
 
+    /**
+     * Firebase authentication object.
+     */
     private FirebaseAuth mAuth;
+    /**
+     * Firebase authentication listener.
+     */
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    /**
+     * Initialize screen and authentication.
+     * @param savedInstanceState Unused
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +57,18 @@ public class SignInActivity extends AppCompatActivity {
         };
     }
 
+    /**
+     * Start listening to authentication.
+     */
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+    /**
+     * Stop listening to authentication.
+     */
     @Override
     public void onStop() {
         super.onStop();
@@ -54,6 +77,10 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sign a user in.
+     * @param v The sign in button
+     */
     public void signIn(View v) {
         EditText emailInput = (EditText) findViewById(R.id.editText_email);
         EditText passwordInput = (EditText) findViewById(R.id.editText_password);
@@ -65,13 +92,17 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(SignInActivity.this, R.string.auth_failed_toast,
-                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(SignInActivity.this, R.string.auth_failed_toast,
+//                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
+    /**
+     * Go to the register screen.
+     * @param v The register button
+     */
     public void register(View v) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);

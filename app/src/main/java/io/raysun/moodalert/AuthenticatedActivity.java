@@ -14,6 +14,11 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public abstract class AuthenticatedActivity extends AppCompatActivity {
 
+    /**
+     * Add the sign out option.
+     * @param menu The menu to add to
+     * @return If successful
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -21,6 +26,11 @@ public abstract class AuthenticatedActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Sign out and go back to sign in screen.
+     * @param item The menu option selected.
+     * @return If successful
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

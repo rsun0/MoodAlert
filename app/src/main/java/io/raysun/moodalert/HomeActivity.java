@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+/**
+ * The home screen of the app after logging in.
+ * @author Ray Sun
+ */
 public class HomeActivity extends AuthenticatedActivity {
 
     @Override
