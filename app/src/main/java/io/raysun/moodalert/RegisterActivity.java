@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Screen for registering a new user.
@@ -28,6 +30,14 @@ public class RegisterActivity extends AppCompatActivity {
      * Firebase authentication listener.
      */
     private FirebaseAuth.AuthStateListener mAuthListener;
+    /**
+     * The app database.
+     */
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    /**
+     * The users table.
+     */
+    private DatabaseReference mUsers = database.getReference("users");
 
     /**
      * Initalize screen and authentication listeners.
@@ -77,10 +87,12 @@ public class RegisterActivity extends AppCompatActivity {
      * @param v The register button
      */
     public void register(View v) {
+        EditText nameInput = (EditText) findViewById(R.id.editText_name);
         EditText emailInput = (EditText) findViewById(R.id.editText_email);
         EditText passwordInput = (EditText) findViewById(R.id.editText_password);
-        EditText confirmInput = (EditText) findViewById(R.id.editText_passwordConfirm);
-        String email = emailInput.getText().toString();
+        final EditText confirmInput = (EditText) findViewById(R.id.editText_passwordConfirm);
+        final String name = nameInput.getText().toString();
+        final String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
         String confirm = confirmInput.getText().toString();
 
@@ -97,8 +109,20 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, R.string.auth_failed_toast,
                                     Toast.LENGTH_SHORT).show();
                         }
-                        //TODO add user to database
+                        addUserToDatabase(email, name);
                     }
                 });
+    }
+
+    /**
+     * Add a new user to the users database under their email.
+     * @param email The email to add
+     * @param name The name to add
+     */
+    private void addUserToDatabase(String email, String name) {
+        DatabaseUser user = new DatabaseUser(name);
+        // remove '.' for Firebase
+        String sanitizedEmail  = email.replace('.', ',');
+        mUsers.child(sanitizedEmail).setValue(user);
     }
 }

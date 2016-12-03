@@ -28,8 +28,17 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class FirebaseDatabaseTest {
 
+    /**
+     * The database to test.
+     */
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    /**
+     * The users table.
+     */
     private DatabaseReference mUsers = database.getReference("users");
+    /**
+     * The alerts table.
+     */
     private DatabaseReference mAlerts = database.getReference("alerts");
 
     /**
