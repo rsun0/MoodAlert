@@ -1,6 +1,7 @@
 package io.raysun.moodalert;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -40,6 +41,10 @@ public class FriendsActivity extends AuthenticatedActivity {
      * The list view adapter.
      */
     private FriendAdapter listViewAdapter;
+    /**
+     * A map of all UIDs to users.
+     */
+    private Map<String, DatabaseUser> userMap = new HashMap<>();
     /**
      * A map of all emails to UIDs.
      */
@@ -97,14 +102,35 @@ public class FriendsActivity extends AuthenticatedActivity {
 
                 // Update user map
                 for (DataSnapshot user : dataSnapshot.getChildren()) {
-                    emailMap.put((String) user.child(DatabaseUser.EMAIL).getValue(), user.getKey());
-                    nameMap.put((String) user.child(DatabaseUser.NAME).getValue(), user.getKey());
+                    String name = (String) user.child(DatabaseUser.NAME).getValue();
+                    String email = (String) user.child(DatabaseUser.EMAIL).getValue();
+
+                    nameMap.put(name, user.getKey());
+                    emailMap.put(email, user.getKey());
+
+                    List<String> friends;
+                    if (user.hasChild(DatabaseUser.FRIENDS)) {
+                        friends = (List<String>) user.child(DatabaseUser.FRIENDS).getValue();
+                    }
+                    else {
+                        friends = new ArrayList<String>();
+                    }
+
+                    userMap.put(user.getKey(), new DatabaseUser(name, email, friends));
                 }
 
                 // Update current user
                 String name = (String) userData.child(DatabaseUser.NAME).getValue();
                 String email = (String) userData.child(DatabaseUser.EMAIL).getValue();
                 currentUser = new DatabaseUser(name, email, friendUIDs);
+
+//                for (String uid : friendUIDs) {
+//                    String friendName = (String) dataSnapshot.child(uid).child(DatabaseUser.NAME).getValue();
+//                    String friendEmail = (String) dataSnapshot.child(uid).child(DatabaseUser.EMAIL).getValue();
+//                    List<String> friendFriends = (List<String>) dataSnapshot.child(uid).
+//                            child(DatabaseUser.FRIENDS).getValue();
+//                    userMap.put(uid, new DatabaseUser(friendName, friendEmail, friendFriends));
+//                }
             }
 
             @Override
@@ -129,7 +155,10 @@ public class FriendsActivity extends AuthenticatedActivity {
         }
 
         currentUser.addFriend(friendUid);
+        DatabaseUser friend = userMap.get(friendUid);
+        friend.addFriend(mAuth.getCurrentUser().getUid());
         mUsers.child(mAuth.getCurrentUser().getUid()).setValue(currentUser);
+        mUsers.child(friendUid).setValue(friend);
     }
 
     /**
@@ -140,6 +169,9 @@ public class FriendsActivity extends AuthenticatedActivity {
         String friendUid = nameMap.get(name);
 
         currentUser.removeFriend(friendUid);
+        DatabaseUser friend = userMap.get(friendUid);
+        friend.removeFriend(mAuth.getCurrentUser().getUid());
         mUsers.child(mAuth.getCurrentUser().getUid()).setValue(currentUser);
+        mUsers.child(friendUid).setValue(friend);
     }
 }

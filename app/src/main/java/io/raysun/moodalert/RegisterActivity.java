@@ -95,6 +95,12 @@ public class RegisterActivity extends AppCompatActivity {
         String password = passwordInput.getText().toString();
         String confirm = confirmInput.getText().toString();
 
+        if (name.length() == 0 || email.length() == 0 || password.length() == 0 || confirm.length() == 0) {
+            Toast.makeText(RegisterActivity.this, R.string.register_err_toast,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (!password.equals(confirm)) {
             Toast.makeText(this, R.string.mismatch_toast, Toast.LENGTH_SHORT).show();
             return;
@@ -105,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, R.string.auth_failed_toast,
+                            Toast.makeText(RegisterActivity.this, R.string.register_err_toast,
                                     Toast.LENGTH_SHORT).show();
                         }
                         addUserToDatabase(task.getResult().getUser().getUid(), name, email);
