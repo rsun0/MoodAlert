@@ -55,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-                    intent.putExtra(SignInActivity.UID_EXTRA, user.getUid());
                     startActivity(intent);
                 }
             }
@@ -109,20 +108,19 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, R.string.auth_failed_toast,
                                     Toast.LENGTH_SHORT).show();
                         }
-                        addUserToDatabase(email, name);
+                        addUserToDatabase(task.getResult().getUser().getUid(), name, email);
                     }
                 });
     }
 
     /**
-     * Add a new user to the users database under their email.
-     * @param email The email to add
+     * Add a new user to the users database under their UID.
+     * @param uid The UID to add under
      * @param name The name to add
+     * @param email The email to add
      */
-    private void addUserToDatabase(String email, String name) {
-        DatabaseUser user = new DatabaseUser(name);
-        // remove '.' for Firebase
-        String sanitizedEmail  = email.replace('.', ',');
-        mUsers.child(sanitizedEmail).setValue(user);
+    private void addUserToDatabase(String uid, String name, String email) {
+        DatabaseUser user = new DatabaseUser(name, email);
+        mUsers.child(uid).setValue(user);
     }
 }

@@ -22,6 +22,16 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_title"
+        android:layout_alignParentStart="true"
+        android:id="@+id/spinner_exclude"
+        android:spinnerMode="dialog"
+        android:layout_marginTop="25dp"
+        android:prompt="@string/spinner_prompt"/>
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,9 +39,9 @@
         android:ems="15"
         android:layout_marginTop="25dp"
         android:id="@+id/editText_name"
-        android:hint="@string/name_hint"
+        android:hint="@string/subject_hint"
         android:fontFamily="sans-serif"
-        android:layout_below="@+id/textView_title"
+        android:layout_below="@id/spinner_exclude"
         android:layout_alignParentStart="true"
         android:textSize="20sp" />
 
@@ -44,24 +54,16 @@
         android:id="@+id/editText_mood"
         android:hint="@string/mood_hint"
         android:fontFamily="sans-serif"
-        android:layout_below="@+id/editText_name"
+        android:layout_below="@id/editText_name"
         android:layout_alignParentStart="true"
         android:textSize="20sp" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText_mood"
-        android:layout_alignParentStart="true"
-        android:id="@+id/spinner_username"
-        android:spinnerMode="dialog"
-        android:layout_marginTop="10dp"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/send_button"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="sendAlert"/>
 
 </RelativeLayout>

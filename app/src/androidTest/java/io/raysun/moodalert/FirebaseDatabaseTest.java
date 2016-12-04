@@ -47,8 +47,8 @@ public class FirebaseDatabaseTest {
      */
     @Test
     public void writeUser() throws Exception {
-        DatabaseUser user0 = new DatabaseUser("Jack Maxler");
-        DatabaseUser user1 = new DatabaseUser("Martin Luthor");
+        DatabaseUser user0 = new DatabaseUser("Jack Maxler", "jack@email.com");
+        DatabaseUser user1 = new DatabaseUser("Martin Luthor", "martin@email.com");
         user0.friends.add("user1");
         user1.friends.add("user0");
 

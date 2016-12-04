@@ -21,11 +21,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class SignInActivity extends AppCompatActivity {
 
     /**
-     * The name of the extra for the user ID.
-     */
-    public static final String UID_EXTRA = "uid";
-
-    /**
      * Firebase authentication object.
      */
     private FirebaseAuth mAuth;
@@ -50,7 +45,6 @@ public class SignInActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
-                    intent.putExtra(UID_EXTRA, user.getUid());
                     startActivity(intent);
                 }
             }

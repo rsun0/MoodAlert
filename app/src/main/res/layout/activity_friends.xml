@@ -41,7 +41,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
+        android:inputType="textEmailAddress"
         android:ems="15"
         android:layout_above="@id/button_addFriend"
         android:layout_centerHorizontal="true"

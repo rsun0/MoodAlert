@@ -7,10 +7,11 @@
     <string name="register_button">Register</string>
     <string name="register_title">Register</string>
     <string name="name_hint">Name</string>
+    <string name="subject_hint">Subject name</string>
     <string name="send_alert_button">Send Alert</string>
     <string name="friends_button">Friends</string>
     <string name="send_alert_title">Send Alert</string>
-    <string name="mood_hint">Mood</string>
+    <string name="mood_hint">Short description</string>
     <string name="send_button">Send</string>
     <string name="add_friend_button">Add Friend</string>
     <string name="friends_title">Friends</string>
@@ -18,4 +19,5 @@
     <string name="mismatch_toast">Password confirmation does not match</string>
     <string name="menu_sign_out">Sign Out</string>
     <string name="confirm_password_hint">Confirm password</string>
+    <string name="spinner_prompt">Select subject</string>
 </resources>
