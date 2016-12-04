@@ -26,7 +26,8 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView_title">
+        android:layout_below="@id/textView_title"
+        android:id="@+id/listView_friends">
     </ListView>
 
     <Button
@@ -36,7 +37,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/button_addFriend"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:onClick="addFriend"/>
 
     <EditText
         android:layout_width="wrap_content"

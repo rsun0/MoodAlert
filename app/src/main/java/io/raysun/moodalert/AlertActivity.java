@@ -1,7 +1,6 @@
 package io.raysun.moodalert;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -80,9 +79,15 @@ public class AlertActivity extends AuthenticatedActivity implements AdapterView.
         mUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Object friendData = dataSnapshot.child(mAuth.getCurrentUser().getUid())
-                        .child(DatabaseUser.FRIENDS).getValue();
-                friendUIDs = (List<String>) friendData;
+                if (dataSnapshot.child(mAuth.getCurrentUser().getUid())
+                        .hasChild(DatabaseUser.FRIENDS)) {
+                    Object friendData = dataSnapshot.child(mAuth.getCurrentUser().getUid())
+                            .child(DatabaseUser.FRIENDS).getValue();
+                    friendUIDs = (List<String>) friendData;
+                }
+                else {
+                    friendUIDs = new ArrayList<String>();
+                }
 
                 List<String> friendNames = new ArrayList<>(friendUIDs.size());
                 for (String uid : friendUIDs) {
@@ -95,7 +100,7 @@ public class AlertActivity extends AuthenticatedActivity implements AdapterView.
                 friendNames.add(0, SPINNER_DEFAULT);
                 Spinner spinner = (Spinner) findViewById(R.id.spinner_exclude);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(AlertActivity.this,
-                        android.R.layout.simple_spinner_item, friendNames);
+                        R.layout.spinner_item, friendNames);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
             }

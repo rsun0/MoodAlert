@@ -20,4 +20,5 @@
     <string name="menu_sign_out">Sign Out</string>
     <string name="confirm_password_hint">Confirm password</string>
     <string name="spinner_prompt">Select subject</string>
+    <string name="friend_not_found_toast">That email is not registered</string>
 </resources>

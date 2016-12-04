@@ -14,6 +14,10 @@ public class DatabaseUser {
      */
     public static final String NAME = "name";
     /**
+     * The reference to the email in the database.
+     */
+    public static final String EMAIL = "email";
+    /**
      * The reference to the friends list in the database.
      */
     public static final String FRIENDS = "friends";
@@ -27,7 +31,7 @@ public class DatabaseUser {
      */
     public String email;
     /**
-     * A list of the usernames of friends.
+     * A list of the UIDs of friends.
      */
     public List<String> friends;
 
@@ -37,9 +41,19 @@ public class DatabaseUser {
      * @param email The email
      */
     public DatabaseUser(String name, String email) {
+        this(name, email, new ArrayList<String>());
+    }
+
+    /**
+     * Constructor
+     * @param name The name
+     * @param email The email
+     * @param friends The list of friend UIDs
+     */
+    public DatabaseUser(String name, String email, List<String> friends) {
         this.name = name;
         this.email = email;
-        friends = new ArrayList<String>();
+        this.friends = friends;
     }
 
     /**
@@ -47,5 +61,13 @@ public class DatabaseUser {
      */
     public DatabaseUser() {
 
+    }
+
+    /**
+     * Add a friend.
+     * @param uid The UID of the friend
+     */
+    public void addFriend(String uid) {
+        friends.add(uid);
     }
 }
