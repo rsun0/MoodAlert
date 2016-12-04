@@ -10,6 +10,10 @@ import java.util.List;
 
 public class DatabaseUser {
     /**
+     * The key to the users table.
+     */
+    public static final String KEY = "users";
+    /**
      * The reference to the name in the database.
      */
     public static final String NAME = "name";

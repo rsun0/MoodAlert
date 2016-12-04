@@ -28,26 +28,17 @@ import java.util.Map;
 public class AlertActivity extends AuthenticatedActivity implements AdapterView.OnItemSelectedListener {
 
     /**
-     * The default option for the spinner.
-     */
-    private static final String SPINNER_DEFAULT = "Not a user";
-
-    /**
-     * Firebase authentication object.
-     */
-    private FirebaseAuth mAuth;
-    /**
      * The app database.
      */
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     /**
      * The users table.
      */
-    private DatabaseReference mUsers = database.getReference("users");
+    private DatabaseReference mUsers = database.getReference(DatabaseUser.KEY);
     /**
      * The alerts table.
      */
-    private DatabaseReference mAlerts = database.getReference("alerts");
+    private DatabaseReference mAlerts = database.getReference(DatabaseAlert.KEY);
     /**
      * The list of friend UIDs.
      */
@@ -97,7 +88,7 @@ public class AlertActivity extends AuthenticatedActivity implements AdapterView.
                     friendReference.put(name, uid);
                 }
 
-                friendNames.add(0, SPINNER_DEFAULT);
+                friendNames.add(0, getString(R.string.spinner_default));
                 Spinner spinner = (Spinner) findViewById(R.id.spinner_exclude);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(AlertActivity.this,
                         R.layout.spinner_item, friendNames);
@@ -152,7 +143,7 @@ public class AlertActivity extends AuthenticatedActivity implements AdapterView.
         EditText nameInput = (EditText) findViewById(R.id.editText_name);
         EditText moodInput = (EditText) findViewById(R.id.editText_mood);
         String name = nameInput.getText().toString();
-        String mood = moodInput.getText().toString();
+        String description = moodInput.getText().toString();
 
         List<String> receivers = new ArrayList<>(friendUIDs);
         receivers.add(mAuth.getCurrentUser().getUid());
@@ -162,7 +153,7 @@ public class AlertActivity extends AuthenticatedActivity implements AdapterView.
 
         Date timestamp = Calendar.getInstance().getTime();
 
-        DatabaseAlert alert = new DatabaseAlert(name, timestamp, mood, receivers);
+        DatabaseAlert alert = new DatabaseAlert(name, description, timestamp, receivers);
         mAlerts.push().setValue(alert);
     }
 }

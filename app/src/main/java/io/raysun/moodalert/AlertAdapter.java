@@ -15,15 +15,15 @@ import java.util.Date;
  * A custom adapter for viewing alerts.
  */
 public class AlertAdapter extends ArrayAdapter<DatabaseAlert> {
-
-    /**
-     * The number of hours in a day.
-     */
-    private static final int HOURS_PER_DAY = 24;
     /**
      * The error message for an alert older than 24 hours.
      */
     private static final String OLD_ALERT_ERR = "Alert older than 24 hours in ListView adapter";
+
+    /**
+     * The activity the adapter is a part of.
+     */
+    private Context mContext;
 
     /**
      * Constructor.
@@ -32,6 +32,7 @@ public class AlertAdapter extends ArrayAdapter<DatabaseAlert> {
      */
     public AlertAdapter(Context context, int resource) {
         super(context, resource);
+        mContext = context;
     }
 
     /**
@@ -46,7 +47,7 @@ public class AlertAdapter extends ArrayAdapter<DatabaseAlert> {
     public View getView(int position, View v, ViewGroup parent) {
         if (v == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            inflater.inflate(R.layout.alert, null);
+            v = inflater.inflate(R.layout.alert, null);
         }
 
         DatabaseAlert alertData = getItem(position);
@@ -60,24 +61,24 @@ public class AlertAdapter extends ArrayAdapter<DatabaseAlert> {
         Calendar currentTime = Calendar.getInstance();
         Calendar timestamp = Calendar.getInstance();
         timestamp.setTime(timestampDate);
-        int diffDay = currentTime.get(Calendar.DATE) - timestamp.get(Calendar.DATE);
-        int diffHour = currentTime.get(Calendar.HOUR) - timestamp.get(Calendar.HOUR);
+        int diffDay = currentTime.get(Calendar.DAY_OF_YEAR) - timestamp.get(Calendar.DAY_OF_YEAR);
+        int diffHour = currentTime.get(Calendar.HOUR_OF_DAY) - timestamp.get(Calendar.HOUR_OF_DAY);
         int diffMinute = currentTime.get(Calendar.MINUTE) - timestamp.get(Calendar.MINUTE);
         int diffSecond = currentTime.get(Calendar.SECOND) - timestamp.get(Calendar.SECOND);
-        diffHour += diffDay * HOURS_PER_DAY;
-        if (diffHour >= HOURS_PER_DAY) {
+        diffHour += diffDay * DatabaseAlert.HOURS_PER_DAY;
+        if (diffHour >= DatabaseAlert.HOURS_PER_DAY) {
             throw new RuntimeException(OLD_ALERT_ERR);
         }
         if (diffHour > 0) {
-            relativeTimestamp = Integer.toString(diffHour) + R.string.hour_abbreviation;
+            relativeTimestamp = Integer.toString(diffHour) + mContext.getString(R.string.hour_abbreviation);
         }
         else if (diffMinute > 0) {
-            relativeTimestamp = Integer.toString(diffMinute) + R.string.minute_abbreviation;
+            relativeTimestamp = Integer.toString(diffMinute) + mContext.getString(R.string.minute_abbreviation);
         }
         else {
-            relativeTimestamp = Integer.toString(diffSecond) + R.string.second_abbreviation;
+            relativeTimestamp = Integer.toString(diffSecond) + mContext.getString(R.string.second_abbreviation);
         }
-        relativeTimestamp += " " + R.string.timestamp_suffix;
+        relativeTimestamp += " " + mContext.getString(R.string.timestamp_suffix);
 
         TextView nameView = (TextView) v.findViewById(R.id.textView_name);
         TextView descView = (TextView) v.findViewById(R.id.textView_description);

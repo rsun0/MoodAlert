@@ -1,7 +1,6 @@
 package io.raysun.moodalert;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -26,17 +25,13 @@ import java.util.Map;
 public class FriendsActivity extends AuthenticatedActivity {
 
     /**
-     * Firebase authentication object.
-     */
-    private FirebaseAuth mAuth;
-    /**
      * The app database.
      */
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     /**
      * The users table.
      */
-    private DatabaseReference mUsers = database.getReference("users");
+    private DatabaseReference mUsers = database.getReference(DatabaseUser.KEY);
     /**
      * The list view adapter.
      */
