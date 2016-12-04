@@ -123,14 +123,6 @@ public class FriendsActivity extends AuthenticatedActivity {
                 String name = (String) userData.child(DatabaseUser.NAME).getValue();
                 String email = (String) userData.child(DatabaseUser.EMAIL).getValue();
                 currentUser = new DatabaseUser(name, email, friendUIDs);
-
-//                for (String uid : friendUIDs) {
-//                    String friendName = (String) dataSnapshot.child(uid).child(DatabaseUser.NAME).getValue();
-//                    String friendEmail = (String) dataSnapshot.child(uid).child(DatabaseUser.EMAIL).getValue();
-//                    List<String> friendFriends = (List<String>) dataSnapshot.child(uid).
-//                            child(DatabaseUser.FRIENDS).getValue();
-//                    userMap.put(uid, new DatabaseUser(friendName, friendEmail, friendFriends));
-//                }
             }
 
             @Override
