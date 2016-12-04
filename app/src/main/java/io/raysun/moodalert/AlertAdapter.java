@@ -15,10 +15,6 @@ import java.util.Date;
  * A custom adapter for viewing alerts.
  */
 public class AlertAdapter extends ArrayAdapter<DatabaseAlert> {
-    /**
-     * The error message for an alert older than 24 hours.
-     */
-    private static final String OLD_ALERT_ERR = "Alert older than 24 hours in ListView adapter";
 
     /**
      * The activity the adapter is a part of.
@@ -66,9 +62,7 @@ public class AlertAdapter extends ArrayAdapter<DatabaseAlert> {
         int diffMinute = currentTime.get(Calendar.MINUTE) - timestamp.get(Calendar.MINUTE);
         int diffSecond = currentTime.get(Calendar.SECOND) - timestamp.get(Calendar.SECOND);
         diffHour += diffDay * DatabaseAlert.HOURS_PER_DAY;
-        if (diffHour >= DatabaseAlert.HOURS_PER_DAY) {
-            throw new RuntimeException(OLD_ALERT_ERR);
-        }
+
         if (diffHour > 0) {
             relativeTimestamp = Integer.toString(diffHour) + mContext.getString(R.string.hour_abbreviation);
         }
