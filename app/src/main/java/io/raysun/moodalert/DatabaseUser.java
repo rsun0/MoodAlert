@@ -70,4 +70,12 @@ public class DatabaseUser {
     public void addFriend(String uid) {
         friends.add(uid);
     }
+
+    /**
+     * Remove a friend.
+     * @param uid The UID of the friend
+     */
+    public void removeFriend(String uid) {
+        friends.remove(uid);
+    }
 }

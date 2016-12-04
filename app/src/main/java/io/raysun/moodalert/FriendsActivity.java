@@ -43,7 +43,11 @@ public class FriendsActivity extends AuthenticatedActivity {
     /**
      * A map of all emails to UIDs.
      */
-    private Map<String, String> userMap = new HashMap<>();
+    private Map<String, String> emailMap = new HashMap<>();
+    /**
+     * A map of all names to UIDs.
+     */
+    private Map<String, String> nameMap = new HashMap<>();
     /**
      * The current user.
      */
@@ -93,7 +97,8 @@ public class FriendsActivity extends AuthenticatedActivity {
 
                 // Update user map
                 for (DataSnapshot user : dataSnapshot.getChildren()) {
-                    userMap.put((String) user.child(DatabaseUser.EMAIL).getValue(), user.getKey());
+                    emailMap.put((String) user.child(DatabaseUser.EMAIL).getValue(), user.getKey());
+                    nameMap.put((String) user.child(DatabaseUser.NAME).getValue(), user.getKey());
                 }
 
                 // Update current user
@@ -116,7 +121,7 @@ public class FriendsActivity extends AuthenticatedActivity {
     public void addFriend(View v) {
         EditText emailInput = (EditText) findViewById(R.id.editText_email);
         String friendEmail = emailInput.getText().toString();
-        String friendUid = userMap.get(friendEmail);
+        String friendUid = emailMap.get(friendEmail);
 
         if (friendUid == null) {
             Toast.makeText(this, R.string.friend_not_found_toast, Toast.LENGTH_SHORT).show();
@@ -124,6 +129,17 @@ public class FriendsActivity extends AuthenticatedActivity {
         }
 
         currentUser.addFriend(friendUid);
+        mUsers.child(mAuth.getCurrentUser().getUid()).setValue(currentUser);
+    }
+
+    /**
+     * Removes a friend.
+     * @param name The name of the friend to remove.
+     */
+    public void removeFriend(String name) {
+        String friendUid = nameMap.get(name);
+
+        currentUser.removeFriend(friendUid);
         mUsers.child(mAuth.getCurrentUser().getUid()).setValue(currentUser);
     }
 }

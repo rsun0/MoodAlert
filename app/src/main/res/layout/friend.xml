@@ -18,6 +18,7 @@
         android:layout_height="32dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/remove" />
+        android:src="@drawable/remove"
+        android:id="@+id/imageView_remove"/>
 
 </RelativeLayout>
